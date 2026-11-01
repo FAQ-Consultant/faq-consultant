@@ -6,12 +6,14 @@
   "description": "Express API for the FAQ chatbot and consultation demo",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "node --watch src/server.js"
+    "dev": "node --watch src/server.js",
+    "test": "node --test src/__tests__/*.test.js"
   },
   "engines": {
     "node": ">=18.18.0"
   },
   "dependencies": {
+    "better-sqlite3": "^9.6.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2"
   }

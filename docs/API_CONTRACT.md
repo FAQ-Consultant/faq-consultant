@@ -93,3 +93,164 @@ VITE_USE_MOCK=false                        # true = dùng FAQ giả lập, khôn
 Khi `VITE_USE_MOCK=true`, frontend tự trả lời dựa trên
 `frontend/src/data/faq.js` và không gọi `POST /api/chat` — hữu ích để test
 giao diện độc lập trước khi backend sẵn sàng.
+
+
+---
+
+## 5. Appointment API (Backend — SQLite)
+
+> Added in backend upgrade. All appointment data is now persisted to SQLite
+> (`backend/data/appointments.db`). The localStorage records used by the
+> frontend remain valid; use `POST /api/migrate/appointments` (admin) to
+> import them into the database.
+
+### Authentication for admin endpoints
+
+Set the `X-Admin-Token` header to the value of `ADMIN_TOKEN` in the backend
+`.env`. If `ADMIN_TOKEN` is not set the check is skipped (dev only; a warning
+is logged).
+
+| Code | Condition |
+|---|---|
+| `401` | Header absent |
+| `403` | Header value wrong |
+
+---
+
+### POST /api/appointments
+
+Create a new appointment. **Public**.
+
+**Request body**
+
+| Field | Type | Validation |
+|---|---|---|
+| `name` | string | Required, max 100 chars |
+| `phone` | string | Required, `/^0[0-9]{9,10}$/` |
+| `date` | string | Required, `YYYY-MM-DD`, today or future |
+| `time` | string | Required, `HH:MM`, 08:00–16:59 |
+
+**Response `201 Created`**
+
+```json
+{
+  "data": {
+    "id": "uuid",
+    "name": "Nguyễn Văn A",
+    "phone": "0912345678",
+    "date": "2026-12-01",
+    "time": "09:00",
+    "status": "pending",
+    "created_at": "2026-11-01T10:00:00Z",
+    "updated_at": null
+  }
+}
+```
+
+**Errors**: `400` validation failure or time-slot conflict.
+
+---
+
+### GET /api/appointments/:id
+
+Get a single appointment. Returns only safe public fields (`id`, `date`,
+`time`, `status`). **Public**.
+
+**Response `200 OK`**
+
+```json
+{
+  "data": { "id": "uuid", "date": "2026-12-01", "time": "09:00", "status": "pending" }
+}
+```
+
+**Errors**: `404` not found.
+
+---
+
+### GET /api/appointments
+
+Paginated list of all appointments. **Admin only**.
+
+**Query params**: `status`, `page` (default 1), `limit` (default 20, max 100).
+
+**Response `200 OK`**
+
+```json
+{ "data": [...], "total": 42, "page": 1, "limit": 20 }
+```
+
+---
+
+### PATCH /api/appointments/:id/status
+
+Update status. **Admin only**.
+
+**Body**: `{ "status": "confirmed" }` — one of `pending`, `confirmed`,
+`cancelled`, `done`.
+
+**Response `200 OK`**: `{ "data": { ...fullRecord } }`
+
+---
+
+### PATCH /api/appointments/:id/cancel
+
+Cancel an appointment by ID. **Public**.
+
+**Response `200 OK`**: `{ "data": { "id", "date", "time", "status": "cancelled" } }`
+
+---
+
+### POST /api/migrate/appointments
+
+Bulk-import appointment records. **Admin only**. Runs in a single DB
+transaction (full rollback on critical error).
+
+**Body**
+
+```json
+{
+  "appointments": [
+    { "name": "...", "phone": "...", "date": "...", "time": "...", "status": "pending", "id": "optional-uuid" }
+  ]
+}
+```
+
+**Response `200 OK`**
+
+```json
+{ "imported": 5, "skipped": 2, "errors": [...] }
+```
+
+---
+
+## 6. Database Schema
+
+### `appointments`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | TEXT PK | UUID v4 |
+| `name` | TEXT NOT NULL | |
+| `phone` | TEXT NOT NULL | |
+| `date` | TEXT NOT NULL | YYYY-MM-DD |
+| `time` | TEXT NOT NULL | HH:MM |
+| `status` | TEXT | `pending`/`confirmed`/`cancelled`/`done` |
+| `created_at` | TEXT | ISO 8601 UTC |
+| `updated_at` | TEXT | ISO 8601 UTC or null |
+
+### `migrations_log`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | INTEGER PK | Auto-increment |
+| `name` | TEXT NOT NULL UNIQUE | Migration identifier |
+| `applied_at` | TEXT | ISO 8601 UTC |
+
+---
+
+## 7. Updated CORS Policy
+
+Allowed methods: `GET, POST, PATCH, DELETE, OPTIONS`
+
+Allowed headers: `Content-Type, X-Admin-Token`

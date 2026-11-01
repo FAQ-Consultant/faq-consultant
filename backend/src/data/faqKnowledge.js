@@ -24,7 +24,14 @@ export const faqKnowledge = [
       "co nhung loai may nao",
       "danh muc san pham",
       "cac loai may moc",
-      "minh phat ban nhung gi"
+      "minh phat ban nhung gi",
+      "ban nhung loai may gi",
+      "cong ty co nhung san pham gi",
+      "minh phat co nhung may nao",
+      "hang hoa cua cong ty",
+      "san pham chinh cua cong ty",
+      "may moc kinh doanh la gi",
+      "cac san pham ban o day"
     ],
     suggestions: [
       "Tôi nên chọn máy nào cho xưởng cơ khí?",
@@ -43,7 +50,14 @@ export const faqKnowledge = [
       "nen mua loai may nao",
       "tu van chon may",
       "may nao phu hop voi nhu cau",
-      "chon may theo nhu cau"
+      "chon may theo nhu cau",
+      "nen chon may gi",
+      "may nao tot nhat",
+      "loai may nao phu hop",
+      "tu van lua chon may",
+      "muon chon may phu hop",
+      "may nao dung cho xuong",
+      "goi y may co khi"
     ],
     suggestions: [
       "Công ty kinh doanh những loại máy nào?",
@@ -63,7 +77,13 @@ export const faqKnowledge = [
       "gia may moc",
       "gia san pham",
       "bang gia may",
-      "chi phi mua may"
+      "chi phi mua may",
+      "gia may khoan",
+      "mua may khoan bao nhieu tien",
+      "gia may tinh bang",
+      "may khoan bao nhieu",
+      "bao nhieu tien mot cai may",
+      "chi phi dau tu may moc"
     ],
     suggestions: [
       "Công ty kinh doanh những loại máy nào?",
@@ -82,7 +102,13 @@ export const faqKnowledge = [
       "con hang khong",
       "kiem tra ton kho",
       "tinh trang san pham",
-      "may nay co san khong"
+      "may nay co san khong",
+      "may con hang khong",
+      "co hang may phay khong",
+      "may phay con trong kho khong",
+      "ton kho may moc",
+      "may co trong kho khong",
+      "hang co san khong"
     ],
     suggestions: [
       "Công ty kinh doanh những loại máy nào?",
@@ -102,7 +128,13 @@ export const faqKnowledge = [
       "cong suat may bao nhieu",
       "toc do may",
       "do chinh xac cua may",
-      "tai lieu ky thuat"
+      "tai lieu ky thuat",
+      "xem catalogue may",
+      "catalog may moc",
+      "thong so chi tiet may",
+      "cong suat motor",
+      "do chinh xac gia cong",
+      "xem thong so may"
     ],
     suggestions: [
       "Công ty kinh doanh những loại máy nào?",
@@ -121,7 +153,13 @@ export const faqKnowledge = [
       "thoi han bao hanh",
       "chinh sach bao hanh",
       "bao hanh may moc",
-      "dieu kien bao hanh"
+      "dieu kien bao hanh",
+      "co bao hanh khong",
+      "bao hanh bao lau",
+      "chinh sach bao tri",
+      "may bi hong thi bao hanh the nao",
+      "sau khi mua co bao hanh khong",
+      "ho tro sua chua may"
     ],
     suggestions: [
       "Tôi có thể xem thông số kỹ thuật ở đâu?",
@@ -141,7 +179,13 @@ export const faqKnowledge = [
       "thoi gian giao hang",
       "chinh sach giao hang",
       "giao may den dia chi",
-      "van chuyen may moc"
+      "van chuyen may moc",
+      "co ship hang khong",
+      "phi ship may",
+      "giao may ve nha may",
+      "van chuyen may den noi",
+      "co giao may toi dia chi khong",
+      "phi giao hang bao nhieu"
     ],
     suggestions: [
       "Giá máy khoan bàn là bao nhiêu?",
@@ -161,7 +205,13 @@ export const faqKnowledge = [
       "mua may cho nha xuong",
       "mua nhieu thiet bi",
       "chinh sach mua si",
-      "chiet khau khi mua nhieu"
+      "chiet khau khi mua nhieu",
+      "dat hang so luong lon",
+      "mua may voi gia si",
+      "gia so luong lon",
+      "uu dai mua nhieu",
+      "don hang lon thi sao",
+      "dat mua nhieu cai may"
     ],
     suggestions: [
       "Công ty kinh doanh những loại máy nào?",
@@ -181,7 +231,13 @@ export const faqKnowledge = [
       "hen lich tu van",
       "muon duoc tu van",
       "lien he de tu van",
-      "dat hen mua may"
+      "dat hen mua may",
+      "dang ky tu van mien phi",
+      "hen gap tu van vien",
+      "dat hen gap nhan vien",
+      "tu van truc tiep",
+      "lam the nao de dat lich",
+      "muon gap tu van vien"
     ],
     suggestions: [
       "Tôi nên chuẩn bị gì trước khi tư vấn?",
@@ -200,7 +256,13 @@ export const faqKnowledge = [
       "thong tin can co khi mua may",
       "tu van mua may can gi",
       "can cung cap thong tin gi",
-      "chuan bi mua may moc"
+      "chuan bi mua may moc",
+      "can biet gi truoc khi dat lich",
+      "can gi de tu van hieu qua",
+      "thong tin can thiet khi tu van",
+      "ho so can chuan bi",
+      "truoc khi gap tu van can biet gi",
+      "dieu kien de tu van"
     ],
     suggestions: [
       "Tôi nên chọn máy nào cho xưởng cơ khí?",

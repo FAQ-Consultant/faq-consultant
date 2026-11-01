@@ -1,5 +1,7 @@
 import express from "express";
 import chatRoutes from "./routes/chatRoutes.js";
+import appointmentRoutes from "./routes/appointmentRoutes.js";
+import migrationRoutes from "./routes/migrationRoutes.js";
 
 const app = express();
 const allowedOrigins = (process.env.FRONTEND_ORIGIN || "http://localhost:5173,http://127.0.0.1:5173")
@@ -13,8 +15,8 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Vary", "Origin");
   }
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,X-Admin-Token");
   if (req.method === "OPTIONS") return res.sendStatus(204);
   next();
 });
@@ -26,6 +28,8 @@ app.get("/api/health", (_req, res) => {
 });
 
 app.use("/api", chatRoutes);
+app.use("/api", appointmentRoutes);
+app.use("/api", migrationRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ error: "Không tìm thấy endpoint." });
