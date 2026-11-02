@@ -174,3 +174,8 @@ export const faqKnowledge = [
     tags: ["chưa có dữ liệu", "tư vấn viên", "thông tin"]
   }
 ];
+export const defaultSuggestions = [
+  "Minh Phát đang có những loại máy nào?",
+  "Máy khoan bàn MP-KB16 giá bao nhiêu?",
+  "Chính sách bảo hành của Minh Phát thế nào?"
+];
