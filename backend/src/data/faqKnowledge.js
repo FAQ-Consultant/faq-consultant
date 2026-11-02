@@ -1,280 +1,176 @@
 
-/**
- * FAQ nghiệp vụ cho công ty giả định Máy móc Minh Phát.
- * Dữ liệu chỉ phục vụ bài tập môn học, không đại diện cho doanh nghiệp có thật.
- *
- * Nguyên tắc:
- * - Không tự tạo giá bán, tồn kho hoặc chính sách chưa được xác định.
- * - Chỉ trả lời trong phạm vi nội dung được định nghĩa ở đây.
- * - Nếu thiếu thông tin, hướng khách hàng đến bước tư vấn.
- *
- * Giữ nguyên cấu trúc patterns và suggestions để tương thích
- * với backend hiện tại.
- */
-
 export const faqKnowledge = [
+  // 1. GIỚI THIỆU DOANH NGHIỆP
   {
-    id: "product-categories",
-    question: "Công ty kinh doanh những loại máy nào?",
+    id: "FAQ001",
+    category: "company",
+    topic: "Giới thiệu Minh Phát",
+    question: "Minh Phát kinh doanh lĩnh vực gì?",
     answer:
-      "Theo danh mục sản phẩm giả định của Minh Phát, công ty cung cấp các nhóm máy gồm máy khoan bàn, máy tiện cơ khí, máy phay CNC và máy nén khí công nghiệp. Bạn có thể cho biết nhu cầu sử dụng để được hướng dẫn tìm hiểu nhóm máy phù hợp.",
-    patterns: [
-      "cong ty kinh doanh nhung loai may nao",
-      "cong ty ban may gi",
-      "co nhung loai may nao",
-      "danh muc san pham",
-      "cac loai may moc",
-      "minh phat ban nhung gi",
-      "ban nhung loai may gi",
-      "cong ty co nhung san pham gi",
-      "minh phat co nhung may nao",
-      "hang hoa cua cong ty",
-      "san pham chinh cua cong ty",
-      "may moc kinh doanh la gi",
-      "cac san pham ban o day"
-    ],
-    suggestions: [
-      "Tôi nên chọn máy nào cho xưởng cơ khí?",
-      "Tôi có thể xem thông số kỹ thuật ở đâu?",
-      "Tôi muốn mua nhiều máy thì làm thế nào?"
-    ]
+      "Minh Phát cung cấp các dòng máy móc công nghiệp và thiết bị phục vụ gia công cơ khí, sản xuất và hệ thống khí nén.",
+    tags: ["Minh Phát", "công ty", "máy móc công nghiệp"]
   },
+
+  // 2. DANH MỤC SẢN PHẨM
   {
-    id: "machine-selection",
-    question: "Tôi nên chọn máy nào cho xưởng cơ khí?",
+    id: "FAQ002",
+    category: "product_catalog",
+    topic: "Danh mục sản phẩm",
+    question: "Minh Phát hiện có những loại máy nào?",
     answer:
-      "Để lựa chọn máy phù hợp, bạn nên xác định công việc cần thực hiện, loại vật liệu gia công, quy mô sản xuất và ngân sách dự kiến. Bạn có thể cung cấp thêm các thông tin này hoặc đặt lịch tư vấn để được hỗ trợ lựa chọn. Chatbot chưa có đủ dữ liệu kỹ thuật để khẳng định một mẫu máy cụ thể là phù hợp.",
-    patterns: [
-      "toi nen chon may nao cho xuong co khi",
-      "chon may cho xuong co khi",
-      "nen mua loai may nao",
-      "tu van chon may",
-      "may nao phu hop voi nhu cau",
-      "chon may theo nhu cau",
-      "nen chon may gi",
-      "may nao tot nhat",
-      "loai may nao phu hop",
-      "tu van lua chon may",
-      "muon chon may phu hop",
-      "may nao dung cho xuong",
-      "goi y may co khi"
+      "Danh mục sản phẩm gồm máy khoan bàn MP-KB16, máy tiện cơ khí MP-TC400, máy phay CNC MP-CNC650 và máy nén khí công nghiệp MP-KN15.",
+    relatedProducts: [
+      "MP-KB16",
+      "MP-TC400",
+      "MP-CNC650",
+      "MP-KN15"
     ],
-    suggestions: [
-      "Công ty kinh doanh những loại máy nào?",
-      "Tôi có thể xem thông số kỹ thuật ở đâu?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+    tags: ["danh mục", "sản phẩm", "các loại máy"]
   },
+
+  // 3. MÁY KHOAN BÀN
   {
-    id: "machine-pricing",
-    question: "Giá máy khoan bàn là bao nhiêu?",
+    id: "FAQ003",
+    category: "product_knowledge",
+    topic: "Máy khoan bàn",
+    question: "Máy khoan bàn MP-KB16 dùng để làm gì?",
     answer:
-      "Hiện bộ dữ liệu mẫu chưa có bảng giá được xác thực cho máy khoan bàn. Chatbot không thể đưa ra mức giá cụ thể khi chưa có dữ liệu. Bạn có thể đăng ký lịch tư vấn để trao đổi về mẫu máy và nhu cầu báo giá.",
-    patterns: [
-      "gia may khoan ban la bao nhieu",
-      "may khoan ban gia bao nhieu",
-      "bao gia may khoan ban",
-      "gia may moc",
-      "gia san pham",
-      "bang gia may",
-      "chi phi mua may",
-      "gia may khoan",
-      "mua may khoan bao nhieu tien",
-      "gia may tinh bang",
-      "may khoan bao nhieu",
-      "bao nhieu tien mot cai may",
-      "chi phi dau tu may moc"
-    ],
-    suggestions: [
-      "Công ty kinh doanh những loại máy nào?",
-      "Tôi muốn mua nhiều máy thì làm thế nào?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Máy khoan bàn MP-KB16 được sử dụng để khoan kim loại, phục vụ hoạt động gia công cơ khí nhỏ và vừa.",
+    relatedProducts: ["MP-KB16"],
+    tags: ["máy khoan", "khoan kim loại", "gia công cơ khí"]
   },
+
+  // 4. MÁY TIỆN CƠ KHÍ
   {
-    id: "machine-availability",
-    question: "Máy phay CNC hiện có sẵn không?",
+    id: "FAQ004",
+    category: "product_knowledge",
+    topic: "Máy tiện cơ khí",
+    question: "Máy tiện MP-TC400 có thể thực hiện những công việc gì?",
     answer:
-      "Bộ dữ liệu mẫu chưa có thông tin tồn kho được xác nhận của máy phay CNC. Vì vậy, chatbot chưa thể khẳng định sản phẩm còn hàng hay không. Bạn có thể đăng ký tư vấn để yêu cầu kiểm tra tình trạng sản phẩm.",
-    patterns: [
-      "may phay cnc hien co san khong",
-      "may phay cnc con hang khong",
-      "con hang khong",
-      "kiem tra ton kho",
-      "tinh trang san pham",
-      "may nay co san khong",
-      "may con hang khong",
-      "co hang may phay khong",
-      "may phay con trong kho khong",
-      "ton kho may moc",
-      "may co trong kho khong",
-      "hang co san khong"
-    ],
-    suggestions: [
-      "Công ty kinh doanh những loại máy nào?",
-      "Giá máy khoan bàn là bao nhiêu?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Máy tiện cơ khí MP-TC400 phục vụ tiện trụ, tiện mặt đầu và gia công các chi tiết kim loại.",
+    relatedProducts: ["MP-TC400"],
+    tags: ["máy tiện", "tiện trụ", "tiện mặt đầu"]
   },
+
+  // 5. MÁY PHAY CNC
   {
-    id: "technical-specifications",
-    question: "Tôi có thể xem thông số kỹ thuật ở đâu?",
+    id: "FAQ005",
+    category: "product_knowledge",
+    topic: "Máy phay CNC",
+    question: "Máy phay CNC MP-CNC650 dùng để làm gì?",
     answer:
-      "Thông số kỹ thuật cần được tra cứu theo từng mẫu máy và tài liệu tương ứng. Bộ dữ liệu mẫu hiện chưa có bảng thông số chi tiết cho từng sản phẩm, nên chatbot không tự đưa ra các thông số như công suất, tốc độ hoặc độ chính xác. Bạn có thể yêu cầu tư vấn về mẫu máy cụ thể.",
-    patterns: [
-      "toi co the xem thong so ky thuat o dau",
-      "thong so ky thuat cua may",
-      "thong so san pham",
-      "cong suat may bao nhieu",
-      "toc do may",
-      "do chinh xac cua may",
-      "tai lieu ky thuat",
-      "xem catalogue may",
-      "catalog may moc",
-      "thong so chi tiet may",
-      "cong suat motor",
-      "do chinh xac gia cong",
-      "xem thong so may"
-    ],
-    suggestions: [
-      "Công ty kinh doanh những loại máy nào?",
-      "Tôi nên chọn máy nào cho xưởng cơ khí?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Máy phay CNC MP-CNC650 được sử dụng để phay CNC và gia công các chi tiết cơ khí chính xác.",
+    relatedProducts: ["MP-CNC650"],
+    tags: ["máy phay", "CNC", "gia công chính xác"]
   },
+
+  // 6. MÁY NÉN KHÍ
   {
-    id: "warranty-policy",
-    question: "Công ty có bảo hành máy không?",
+    id: "FAQ006",
+    category: "product_knowledge",
+    topic: "Máy nén khí",
+    question: "Máy nén khí MP-KN15 có công dụng gì?",
     answer:
-      "Chính sách bảo hành của công ty giả định chưa được xác định trong bộ dữ liệu hiện tại. Chatbot chưa thể cam kết thời hạn hoặc điều kiện bảo hành. Bạn có thể yêu cầu tư vấn để làm rõ chính sách áp dụng cho sản phẩm quan tâm.",
-    patterns: [
-      "cong ty co bao hanh may khong",
-      "may co bao hanh khong",
-      "thoi han bao hanh",
-      "chinh sach bao hanh",
-      "bao hanh may moc",
-      "dieu kien bao hanh",
-      "co bao hanh khong",
-      "bao hanh bao lau",
-      "chinh sach bao tri",
-      "may bi hong thi bao hanh the nao",
-      "sau khi mua co bao hanh khong",
-      "ho tro sua chua may"
-    ],
-    suggestions: [
-      "Tôi có thể xem thông số kỹ thuật ở đâu?",
-      "Công ty có giao hàng không?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Máy nén khí công nghiệp MP-KN15 có chức năng cung cấp khí nén cho thiết bị và dây chuyền sản xuất.",
+    relatedProducts: ["MP-KN15"],
+    tags: ["máy nén khí", "khí nén", "dây chuyền sản xuất"]
   },
+
+  // 7. TƯ VẤN LỰA CHỌN MÁY
   {
-    id: "delivery-policy",
-    question: "Công ty có giao hàng không?",
+    id: "FAQ007",
+    category: "consultation",
+    topic: "Tư vấn lựa chọn máy",
+    question: "Làm thế nào để lựa chọn máy móc phù hợp?",
     answer:
-      "Bộ dữ liệu mẫu chưa xác định phạm vi giao hàng, phí vận chuyển hoặc thời gian giao máy. Chatbot không thể cam kết các điều kiện này khi chưa có thông tin. Bạn có thể đăng ký tư vấn để trao đổi về nhu cầu nhận hàng.",
-    patterns: [
-      "cong ty co giao hang khong",
-      "co giao may khong",
-      "phi van chuyen",
-      "thoi gian giao hang",
-      "chinh sach giao hang",
-      "giao may den dia chi",
-      "van chuyen may moc",
-      "co ship hang khong",
-      "phi ship may",
-      "giao may ve nha may",
-      "van chuyen may den noi",
-      "co giao may toi dia chi khong",
-      "phi giao hang bao nhieu"
-    ],
-    suggestions: [
-      "Giá máy khoan bàn là bao nhiêu?",
-      "Công ty có bảo hành máy không?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Khách hàng nên xác định mục đích sử dụng, loại vật liệu gia công, yêu cầu kỹ thuật và quy mô sản xuất. Minh Phát có thể hỗ trợ tư vấn dựa trên nhu cầu cụ thể.",
+    tags: ["tư vấn", "lựa chọn máy", "nhu cầu sản xuất"]
   },
+
   {
-    id: "bulk-purchase",
-    question: "Tôi muốn mua nhiều máy thì làm thế nào?",
+    id: "FAQ008",
+    category: "consultation",
+    topic: "So sánh máy khoan và máy tiện",
+    question: "Máy khoan bàn khác máy tiện cơ khí như thế nào?",
     answer:
-      "Nếu có nhu cầu mua nhiều máy, bạn nên chuẩn bị danh sách sản phẩm, số lượng dự kiến và mục đích sử dụng. Nhân viên tư vấn có thể trao đổi thêm về nhu cầu của bạn. Bộ dữ liệu mẫu chưa có chính sách chiết khấu hoặc giá bán số lượng lớn được xác nhận.",
-    patterns: [
-      "toi muon mua nhieu may thi lam the nao",
-      "mua nhieu may",
-      "mua so luong lon",
-      "mua may cho nha xuong",
-      "mua nhieu thiet bi",
-      "chinh sach mua si",
-      "chiet khau khi mua nhieu",
-      "dat hang so luong lon",
-      "mua may voi gia si",
-      "gia so luong lon",
-      "uu dai mua nhieu",
-      "don hang lon thi sao",
-      "dat mua nhieu cai may"
-    ],
-    suggestions: [
-      "Công ty kinh doanh những loại máy nào?",
-      "Giá máy khoan bàn là bao nhiêu?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Máy khoan bàn MP-KB16 phục vụ khoan lỗ trên kim loại. Máy tiện MP-TC400 phục vụ tiện trụ, tiện mặt đầu và gia công chi tiết kim loại. Hai thiết bị có mục đích gia công khác nhau.",
+    relatedProducts: ["MP-KB16", "MP-TC400"],
+    tags: ["so sánh", "máy khoan", "máy tiện"]
   },
+
   {
-    id: "consultation-booking",
-    question: "Tôi có thể đặt lịch tư vấn không?",
+    id: "FAQ009",
+    category: "consultation",
+    topic: "So sánh máy tiện và máy phay CNC",
+    question: "Máy tiện và máy phay CNC khác nhau thế nào?",
     answer:
-      "Bạn có thể đăng ký lịch tư vấn trên ứng dụng demo. Biểu mẫu dự kiến thu thập họ tên, số điện thoại, ngày và giờ tư vấn. Việc lưu thông tin trên ứng dụng demo không đồng nghĩa với việc lịch đã được nhân viên xác nhận.",
-    patterns: [
-      "toi co the dat lich tu van khong",
-      "dat lich tu van",
-      "dang ky lich tu van",
-      "hen lich tu van",
-      "muon duoc tu van",
-      "lien he de tu van",
-      "dat hen mua may",
-      "dang ky tu van mien phi",
-      "hen gap tu van vien",
-      "dat hen gap nhan vien",
-      "tu van truc tiep",
-      "lam the nao de dat lich",
-      "muon gap tu van vien"
-    ],
-    suggestions: [
-      "Tôi nên chuẩn bị gì trước khi tư vấn?",
-      "Tôi nên chọn máy nào cho xưởng cơ khí?",
-      "Tôi muốn mua nhiều máy thì làm thế nào?"
-    ]
+      "Theo danh mục Minh Phát, máy tiện MP-TC400 phục vụ tiện trụ và tiện mặt đầu; máy phay CNC MP-CNC650 phục vụ phay CNC và gia công chi tiết cơ khí chính xác.",
+    relatedProducts: ["MP-TC400", "MP-CNC650"],
+    tags: ["so sánh", "máy tiện", "máy phay CNC"]
   },
+
+  // 8. HƯỚNG DẪN MUA HÀNG
   {
-    id: "consultation-preparation",
-    question: "Tôi nên chuẩn bị gì trước khi tư vấn?",
+    id: "FAQ010",
+    category: "purchasing",
+    topic: "Thông tin đặt hàng",
+    question: "Khi đặt mua máy cần cung cấp thông tin gì?",
     answer:
-      "Để buổi tư vấn hiệu quả hơn, bạn nên chuẩn bị mục đích sử dụng máy, loại vật liệu cần gia công, quy mô sản xuất, số lượng máy và ngân sách dự kiến nếu đã xác định. Đây là các thông tin giúp làm rõ nhu cầu, không phải điều kiện bắt buộc để gửi yêu cầu tư vấn.",
-    patterns: [
-      "toi nen chuan bi gi truoc khi tu van",
-      "can chuan bi gi khi tu van",
-      "thong tin can co khi mua may",
-      "tu van mua may can gi",
-      "can cung cap thong tin gi",
-      "chuan bi mua may moc",
-      "can biet gi truoc khi dat lich",
-      "can gi de tu van hieu qua",
-      "thong tin can thiet khi tu van",
-      "ho so can chuan bi",
-      "truoc khi gap tu van can biet gi",
-      "dieu kien de tu van"
-    ],
-    suggestions: [
-      "Tôi nên chọn máy nào cho xưởng cơ khí?",
-      "Tôi muốn mua nhiều máy thì làm thế nào?",
-      "Tôi có thể đặt lịch tư vấn không?"
-    ]
+      "Khách hàng nên cung cấp tên hoặc mã sản phẩm, số lượng cần mua và thông tin địa điểm giao hàng để được hỗ trợ kiểm tra tồn kho, chi phí vận chuyển và tư vấn đơn hàng.",
+    tags: ["đặt hàng", "mua máy", "thông tin khách hàng"]
+  },
+
+  // 9. BẢO HÀNH
+  {
+    id: "FAQ011",
+    category: "warranty",
+    topic: "Điều kiện bảo hành",
+    question: "Những trường hợp nào không được bảo hành?",
+    answer:
+      "Theo chính sách giả định của Minh Phát, không áp dụng bảo hành đối với hư hỏng do sử dụng sai hướng dẫn, thiết bị tự ý tháo lắp hoặc sửa chữa không được cho phép. Linh kiện hao mòn tự nhiên không thuộc phạm vi bảo hành thông thường.",
+    tags: ["bảo hành", "điều kiện", "sửa chữa"]
+  },
+
+  // 10. GIAO HÀNG VÀ LẮP ĐẶT
+  {
+    id: "FAQ012",
+    category: "delivery",
+    topic: "Vận chuyển máy móc",
+    question: "Phí vận chuyển máy móc được tính như thế nào?",
+    answer:
+      "Phí vận chuyển được báo theo địa điểm giao hàng và trọng lượng thiết bị. Đối với máy CNC và máy tiện, chi phí vận chuyển được báo riêng do cần phương tiện chuyên dụng.",
+    tags: ["vận chuyển", "phí giao hàng", "máy CNC"]
+  },
+
+  {
+    id: "FAQ013",
+    category: "delivery",
+    topic: "Lắp đặt thiết bị",
+    question: "Minh Phát có hỗ trợ lắp đặt không?",
+    answer:
+      "Minh Phát có hỗ trợ lắp đặt thiết bị theo thỏa thuận với khách hàng.",
+    tags: ["lắp đặt", "hỗ trợ kỹ thuật"]
+  },
+
+  // 11. MUA SỐ LƯỢNG LỚN
+  {
+    id: "FAQ014",
+    category: "bulk_purchase",
+    topic: "Chính sách mua số lượng lớn",
+    question: "Mua nhiều máy có được chiết khấu không?",
+    answer:
+      "Minh Phát áp dụng chính sách chiết khấu theo số lượng đặt hàng. Đơn hàng từ 10 máy trở lên cần thỏa thuận riêng với nhân viên kinh doanh.",
+    tags: ["chiết khấu", "mua số lượng lớn", "ưu đãi"]
+  },
+
+  // 12. NGOÀI PHẠM VI DỮ LIỆU
+  {
+    id: "FAQ015",
+    category: "fallback",
+    topic: "Thông tin chưa được xác minh",
+    question: "Nếu khách hỏi thông tin chưa có trong dữ liệu thì sao?",
+    answer:
+      "Hiện tại Minh Phát chưa có thông tin xác minh cho nội dung này. Bạn có thể để lại yêu cầu để nhân viên tư vấn kiểm tra và phản hồi chính xác.",
+    tags: ["chưa có dữ liệu", "tư vấn viên", "thông tin"]
   }
 ];
-
-export const defaultSuggestions = [
-  "Công ty kinh doanh những loại máy nào?",
-  "Giá máy khoan bàn là bao nhiêu?",
-  "Tôi có thể đặt lịch tư vấn không?"
-];
-

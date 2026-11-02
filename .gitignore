@@ -3,3 +3,6 @@ dist
 .env
 .env.local
 *.log
+api.env
+.DS_Store
+*.log
