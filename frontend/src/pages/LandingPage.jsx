@@ -6,21 +6,41 @@ import {
   getStockStatus,
 } from '../data/products.js';
 
-const NAV_LINKS = ['Trang chủ', 'Danh mục sản phẩm', 'Chính sách', 'Về chúng tôi', 'Liên hệ'];
+// Cac muc dieu huong tren trang chu. Chi gom muc nao thuc su co phan noi dung
+// tuong ung de cuon toi (section id ben duoi) - tranh hien thi muc "chet"
+// khong lam gi khi bam vao. "Chinh sach" va "Ve chung toi" chua co noi dung
+// rieng nen tam thoi khong dua vao day.
+const NAV_LINKS = [
+  { label: 'Trang chủ', targetId: 'landing-top' },
+  { label: 'Danh mục sản phẩm', targetId: 'landing-products' },
+  { label: 'Liên hệ', targetId: 'landing-contact' },
+];
+
+function scrollToSection(targetId) {
+  const el = document.getElementById(targetId);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
 
 export default function LandingPage({ onEnterChat }) {
   return (
-    <div className="landing-page">
+    <div className="landing-page" id="landing-top">
       <header className="landing-nav">
         <div className="landing-nav__brand">
           <span className="landing-nav__brand-name">{companyInfo.name}</span>
           <span className="landing-nav__brand-tagline">{companyInfo.tagline}</span>
         </div>
         <nav className="landing-nav__links">
-          {NAV_LINKS.map((label) => (
-            <span key={label} className="landing-nav__link">
+          {NAV_LINKS.map(({ label, targetId }) => (
+            <button
+              key={label}
+              type="button"
+              className="landing-nav__link"
+              onClick={() => scrollToSection(targetId)}
+            >
               {label}
-            </span>
+            </button>
           ))}
         </nav>
         <button type="button" className="landing-nav__cta" onClick={onEnterChat}>
@@ -38,7 +58,7 @@ export default function LandingPage({ onEnterChat }) {
         </div>
       </section>
 
-      <section className="landing-products">
+      <section className="landing-products" id="landing-products">
         <h2 className="landing-products__title">Danh mục sản phẩm</h2>
         <p className="landing-products__subtitle">
           Đa dạng chủng loại máy móc, đáp ứng mọi nhu cầu của doanh nghiệp sản xuất
@@ -79,7 +99,7 @@ export default function LandingPage({ onEnterChat }) {
         ))}
       </section>
 
-      <section className="landing-cta">
+      <section className="landing-cta" id="landing-contact">
         <h2 className="landing-cta__title">Minh Phát – Đồng hành cùng sự phát triển của bạn</h2>
         <p className="landing-cta__subtitle">
           Cung cấp giải pháp máy móc tối ưu, nâng cao năng suất và hiệu quả sản xuất
