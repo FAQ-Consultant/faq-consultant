@@ -8,7 +8,7 @@ import {
 
 const NAV_LINKS = ['Trang chủ', 'Danh mục sản phẩm', 'Chính sách', 'Về chúng tôi', 'Liên hệ'];
 
-export default function LandingPage({ onEnterChat, onEnterAdmin }) {
+export default function LandingPage({ onEnterChat }) {
   return (
     <div className="landing-page">
       <header className="landing-nav">
@@ -23,14 +23,6 @@ export default function LandingPage({ onEnterChat, onEnterAdmin }) {
             </span>
           ))}
         </nav>
-        <button
-          type="button"
-          className="landing-nav__admin-link"
-          onClick={onEnterAdmin}
-          title="Vào trang quản trị lịch hẹn (dashboard)"
-        >
-          Quản trị
-        </button>
         <button type="button" className="landing-nav__cta" onClick={onEnterChat}>
           Đặt lịch tư vấn
         </button>
