@@ -1,24 +1,24 @@
 // Kho câu hỏi thường gặp dùng cho chế độ giả lập (VITE_USE_MOCK=true)
 // và để gợi ý câu hỏi ban đầu trên trang Hỏi đáp của Front-end.
 // Dữ liệu được đồng bộ hóa và định hướng theo kho tri thức FAQ của Back-end
-// (backend/src/data/faqKnowledge.js — Công ty Máy móc Đại Địa Chấn).
+// (backend/src/data/faqKnowledge.js — Công ty Máy móc Minh Phát).
 
 export const faqKnowledge = [
   {
     id: 'product-categories',
     question: 'Công ty kinh doanh những loại máy nào?',
     answer:
-      'Theo danh mục sản phẩm giả định của Đại Địa Chấn, công ty cung cấp các nhóm máy gồm máy khoan bàn, máy tiện cơ khí, máy phay CNC và máy nén khí công nghiệp. Bạn có thể cho biết nhu cầu sử dụng để được hướng dẫn tìm hiểu nhóm máy phù hợp.',
+      'Theo danh mục sản phẩm giả định của Minh Phát, công ty cung cấp các nhóm máy gồm máy khoan bàn, máy tiện cơ khí, máy phay CNC và máy nén khí công nghiệp. Bạn có thể cho biết nhu cầu sử dụng để được hướng dẫn tìm hiểu nhóm máy phù hợp.',
     keywords: [
       'cong ty kinh doanh nhung loai may nao',
       'cong ty ban may gi',
       'co nhung loai may nao',
       'danh muc san pham',
       'cac loai may moc',
-      'dai dia chan ban nhung gi',
+      'minh phat ban nhung gi',
       'ban nhung loai may gi',
       'cong ty co nhung san pham gi',
-      'dai dia chan co nhung may nao',
+      'minh phat co nhung may nao',
       'hang hoa cua cong ty',
       'san pham chinh cua cong ty',
       'may moc kinh doanh la gi',
@@ -34,10 +34,10 @@ export const faqKnowledge = [
       'co nhung loai may nao',
       'danh muc san pham',
       'cac loai may moc',
-      'dai dia chan ban nhung gi',
+      'minh phat ban nhung gi',
       'ban nhung loai may gi',
       'cong ty co nhung san pham gi',
-      'dai dia chan co nhung may nao',
+      'minh phat co nhung may nao',
       'hang hoa cua cong ty',
       'san pham chinh cua cong ty',
       'may moc kinh doanh la gi',
