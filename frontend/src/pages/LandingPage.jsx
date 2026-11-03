@@ -2,17 +2,19 @@ import {
   companyInfo,
   products,
   trustBadges,
+  policies,
   formatPriceVnd,
   getStockStatus,
 } from '../data/products.js';
 
 // Cac muc dieu huong tren trang chu. Chi gom muc nao thuc su co phan noi dung
 // tuong ung de cuon toi (section id ben duoi) - tranh hien thi muc "chet"
-// khong lam gi khi bam vao. "Chinh sach" va "Ve chung toi" chua co noi dung
-// rieng nen tam thoi khong dua vao day.
+// khong lam gi khi bam vao. "Ve chung toi" chua co section rieng nen tam
+// thoi khong dua vao day.
 const NAV_LINKS = [
   { label: 'Trang chủ', targetId: 'landing-top' },
   { label: 'Danh mục sản phẩm', targetId: 'landing-products' },
+  { label: 'Chính sách', targetId: 'landing-policies' },
   { label: 'Liên hệ', targetId: 'landing-contact' },
 ];
 
@@ -97,6 +99,22 @@ export default function LandingPage({ onEnterChat }) {
             <p className="landing-badges__detail">{badge.detail}</p>
           </div>
         ))}
+      </section>
+
+      <section className="landing-policies" id="landing-policies">
+        <h2 className="landing-policies__title">Chính sách</h2>
+        <p className="landing-policies__subtitle">
+          Cam kết rõ ràng, minh bạch trong từng giao dịch
+        </p>
+
+        <div className="landing-policies__grid">
+          {policies.map((policy) => (
+            <div key={policy.title} className="landing-policies__item">
+              <h3 className="landing-policies__item-title">{policy.title}</h3>
+              <p className="landing-policies__item-detail">{policy.detail}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="landing-cta" id="landing-contact">
