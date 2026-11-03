@@ -1,11 +1,11 @@
-// Bộ dữ liệu sản phẩm mẫu (giả lập) của Công ty Máy móc Đại Địa Chấn.
+// Bộ dữ liệu sản phẩm mẫu (giả lập) của Công ty Máy móc Minh Phát.
 // Dùng để hiển thị trên Giao diện bên ngoài (LandingPage) — KHÔNG dùng để
 // thay đổi logic trả lời của chatbot (phần đó thuộc kho tri thức FAQ hiện có).
 // Toàn bộ thông tin dưới đây là dữ liệu giả lập phục vụ demo, không đại diện
 // cho một doanh nghiệp có thật.
 
 export const companyInfo = {
-  name: 'ĐẠI ĐỊA CHẤN',
+  name: 'MINH PHÁT',
   tagline: 'Máy móc cho tương lai',
   headline: 'Giải pháp máy móc công nghiệp hiệu quả cho doanh nghiệp Việt',
   subheadline: 'Chất lượng vượt trội · Tư vấn chuyên nghiệp · Hỗ trợ toàn diện',

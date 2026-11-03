@@ -80,7 +80,7 @@ export default function LandingPage({ onEnterChat }) {
       </section>
 
       <section className="landing-cta">
-        <h2 className="landing-cta__title">Đại Địa Chấn – Đồng hành cùng sự phát triển của bạn</h2>
+        <h2 className="landing-cta__title">Minh Phát – Đồng hành cùng sự phát triển của bạn</h2>
         <p className="landing-cta__subtitle">
           Cung cấp giải pháp máy móc tối ưu, nâng cao năng suất và hiệu quả sản xuất
         </p>
