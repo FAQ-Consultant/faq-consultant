@@ -72,10 +72,7 @@ export default function App() {
         }
       >
         {currentPage === PAGES.LANDING && (
-          <LandingPage
-            onEnterChat={() => setCurrentPage(PAGES.CHAT)}
-            onEnterAdmin={() => setCurrentPage(PAGES.ADMIN)}
-          />
+          <LandingPage onEnterChat={() => setCurrentPage(PAGES.CHAT)} />
         )}
         {currentPage === PAGES.CHAT && (
           <ChatPage onRequestBooking={() => setCurrentPage(PAGES.BOOKING)} />
