@@ -1,6 +1,6 @@
 // Kho câu hỏi thường gặp dùng cho chế độ giả lập (VITE_USE_MOCK=true)
 // và để gợi ý câu hỏi ban đầu trên trang Hỏi đáp của Front-end.
-// Dữ liệu được đồng bộ hóa và định hướng theo khoh tri thức FAQ của Back-end
+// Dữ liệu được đồng bộ hóa và định hướng theo kho tri thức FAQ của Back-end
 // (backend/src/data/faqKnowledge.js — Công ty Máy móc Đại Địa Chấn).
 
 export const faqKnowledge = [
