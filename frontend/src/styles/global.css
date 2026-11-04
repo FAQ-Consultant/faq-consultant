@@ -451,8 +451,17 @@ body {
 }
 
 .landing-nav__link {
+  border: none;
+  background: transparent;
+  padding: 0;
   color: var(--color-text-muted);
   font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.landing-nav__link:hover {
+  color: var(--color-text);
 }
 
 .landing-nav__cta,
@@ -602,6 +611,51 @@ body {
   margin: 0;
   color: var(--color-text-muted);
   font-size: 0.85rem;
+}
+
+.landing-policies {
+  padding: 0 32px 48px;
+  max-width: 1080px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-policies__title {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+}
+
+.landing-policies__subtitle {
+  margin: 0 0 28px;
+  color: var(--color-text-muted);
+}
+
+.landing-policies__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  text-align: left;
+}
+
+.landing-policies__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.landing-policies__item-title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.landing-policies__item-detail {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .landing-cta {

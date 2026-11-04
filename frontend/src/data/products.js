@@ -57,6 +57,30 @@ export const trustBadges = [
   { title: 'Giá cả cạnh tranh', detail: 'Ưu đãi hấp dẫn' },
 ];
 
+// Noi dung chinh sach gia lap, phuc vu demo (chua phai chinh sach thuc te).
+export const policies = [
+  {
+    title: 'Chính sách bảo hành',
+    detail:
+      'Bảo hành chính hãng 12–24 tháng tùy dòng sản phẩm, hỗ trợ kiểm tra và sửa chữa tại trung tâm bảo hành trên toàn quốc.',
+  },
+  {
+    title: 'Chính sách đổi trả',
+    detail:
+      'Đổi mới miễn phí trong vòng 7 ngày nếu phát hiện lỗi kỹ thuật từ nhà sản xuất, kèm biên bản kiểm tra của kỹ thuật viên.',
+  },
+  {
+    title: 'Chính sách vận chuyển',
+    detail:
+      'Giao hàng toàn quốc qua đối tác vận chuyển, miễn phí giao hàng nội thành trong bán kính 20km kể từ kho gần nhất.',
+  },
+  {
+    title: 'Chính sách thanh toán',
+    detail:
+      'Hỗ trợ thanh toán chuyển khoản, tiền mặt khi nhận hàng, hoặc trả góp 0% lãi suất qua đối tác tài chính liên kết.',
+  },
+];
+
 export function formatPriceVnd(price) {
   return `${price.toLocaleString('vi-VN')} đ`;
 }
