@@ -141,7 +141,14 @@ export function matchFaq(message, threshold = MATCH_THRESHOLD) {
   for (const faq of faqKnowledge) {
     let score = 0;
 
-    for (const pattern of faq.patterns) {
+    const patterns = [
+  ...(Array.isArray(faq.patterns) ? faq.patterns : []),
+  faq.question,
+  faq.topic,
+  ...(Array.isArray(faq.tags) ? faq.tags : []),
+].filter(Boolean);
+
+for (const pattern of patterns) {
       const normalizedPattern = normalizeText(pattern);
 
       // Tier 1: exact match
