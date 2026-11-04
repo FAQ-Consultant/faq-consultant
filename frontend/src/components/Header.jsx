@@ -1,4 +1,5 @@
 const NAV_ITEMS = [
+  { key: 'landing', label: 'Trang chủ' },
   { key: 'chat', label: 'Hỏi đáp' },
   { key: 'booking', label: 'Đặt lịch tư vấn' },
   { key: 'admin', label: 'Quản trị' },
