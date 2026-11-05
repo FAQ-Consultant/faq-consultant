@@ -57,6 +57,24 @@ export function updateAppointmentStatus(id, status) {
   return next;
 }
 
+// Cap nhat thong tin lich hen da ton tai (dung khi admin sua lai thong tin
+// nhap sai). Chi ghi de cac truong duoc truyen vao qua `patch`.
+export function updateAppointment(id, patch) {
+  const appointments = readAll();
+  const next = appointments.map((appt) => {
+    if (appt.id !== id) return appt;
+    return {
+      ...appt,
+      ...patch,
+      name: patch.name !== undefined ? patch.name.trim() : appt.name,
+      phone: patch.phone !== undefined ? patch.phone.trim() : appt.phone,
+      note: patch.note !== undefined ? patch.note.trim() : appt.note,
+    };
+  });
+  writeAll(next);
+  return next;
+}
+
 export function deleteAppointment(id) {
   const appointments = readAll();
   const next = appointments.filter((appt) => appt.id !== id);
