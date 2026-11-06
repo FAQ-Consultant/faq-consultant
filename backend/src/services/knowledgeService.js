@@ -1,3 +1,4 @@
+
 import { products } from "../data/product.js";
 import {
   warrantyPolicy,
@@ -25,18 +26,10 @@ const PRODUCT_FAQ_MAP = {
   "MP-KN15": "FAQ006",
 };
 
-// Các intent bắt buộc phải có dữ liệu sản phẩm tương ứng.
-const PRODUCT_DATA_INTENTS = [
-  "price",
-  "inventory",
-  "specifications",
-];
-
 function uniqueItems(items) {
   return [...new Set(items)];
 }
 
-// Kiểm tra dữ liệu có thực sự tồn tại hay không.
 function hasData(value) {
   if (value === null || value === undefined) {
     return false;
@@ -61,6 +54,10 @@ function hasData(value) {
   return Boolean(value);
 }
 
+// ======================================================
+// LẤY SẢN PHẨM PHÙ HỢP
+// ======================================================
+
 function getSelectedProducts(analysis) {
   const productIds = Array.isArray(analysis.productIds)
     ? analysis.productIds
@@ -68,12 +65,24 @@ function getSelectedProducts(analysis) {
 
   const intents = analysis.intents || [];
 
+  const productMention =
+    typeof analysis.productMention === "string"
+      ? analysis.productMention.trim()
+      : "";
+
   const matchedProducts = products.filter((product) =>
     productIds.includes(product.id)
   );
 
-  // Với câu hỏi tìm kiếm danh mục hoặc tư vấn chọn máy,
-  // cung cấp danh mục sản phẩm để Gemini hỗ trợ.
+  // Nếu khách đã nhắc đến sản phẩm cụ thể nhưng
+  // không tìm thấy sản phẩm tương ứng trong danh mục,
+  // tuyệt đối không trả về toàn bộ danh mục.
+  if (productMention && matchedProducts.length === 0) {
+    return [];
+  }
+
+  // Nếu khách hỏi chung về danh mục sản phẩm
+  // hoặc cần tư vấn chọn máy, có thể dùng toàn bộ danh mục.
   const needsProductCatalog =
     intents.includes("product_search") ||
     intents.includes("consultation");
@@ -84,6 +93,10 @@ function getSelectedProducts(analysis) {
 
   return matchedProducts;
 }
+
+// ======================================================
+// LẤY FAQ
+// ======================================================
 
 function getSelectedFaqs(intents, selectedProducts) {
   const faqIds = [];
@@ -107,6 +120,10 @@ function getSelectedFaqs(intents, selectedProducts) {
   );
 }
 
+// ======================================================
+// LẤY CHÍNH SÁCH
+// ======================================================
+
 function getSelectedPolicies(intents) {
   const selectedPolicies = {};
 
@@ -125,9 +142,10 @@ function getSelectedPolicies(intents) {
   return selectedPolicies;
 }
 
-// Chỉ kiểm tra FAQ được chọn trực tiếp theo intent.
-// FAQ hướng dẫn sử dụng sản phẩm không được dùng để
-// chứng minh rằng đã có giá hoặc tồn kho.
+// ======================================================
+// KIỂM TRA FAQ
+// ======================================================
+
 function hasIntentFaq(intent, selectedFaqs) {
   const faqIds = FAQ_BY_INTENT[intent] || [];
 
@@ -136,7 +154,10 @@ function hasIntentFaq(intent, selectedFaqs) {
   );
 }
 
-// Kiểm tra dữ liệu sản phẩm theo đúng câu hỏi.
+// ======================================================
+// KIỂM TRA DỮ LIỆU SẢN PHẨM
+// ======================================================
+
 function hasRequiredProductData(intent, selectedProducts) {
   if (selectedProducts.length === 0) {
     return false;
@@ -167,7 +188,10 @@ function hasRequiredProductData(intent, selectedProducts) {
   });
 }
 
-// Xác định có đủ dữ liệu để trả lời tất cả ý định hay không.
+// ======================================================
+// KIỂM TRA KIẾN THỨC
+// ======================================================
+
 function hasRequiredKnowledge({
   intents,
   selectedProducts,
@@ -212,7 +236,6 @@ function hasRequiredKnowledge({
       hasIntentFaq("purchasing", selectedFaqs),
   };
 
-  // Chỉ xét các intent có quy tắc kiểm tra tương ứng.
   const relevantChecks = intents
     .filter((intent) => checks[intent])
     .map((intent) => checks[intent]);
@@ -221,9 +244,12 @@ function hasRequiredKnowledge({
     return false;
   }
 
-  // Tất cả nội dung khách hỏi đều phải có dữ liệu.
   return relevantChecks.every((check) => check());
 }
+
+// ======================================================
+// TẠO CÂU TRẢ LỜI DỰ PHÒNG
+// ======================================================
 
 function buildFallbackAnswer({
   intents,
@@ -266,6 +292,10 @@ function buildFallbackAnswer({
   return null;
 }
 
+// ======================================================
+// HÀM TRUY XUẤT DỮ LIỆU CHÍNH
+// ======================================================
+
 export function getStructuredKnowledge(message, analysis) {
   if (!analysis || !Array.isArray(analysis.intents)) {
     return {
@@ -286,8 +316,6 @@ export function getStructuredKnowledge(message, analysis) {
 
   const selectedPolicies = getSelectedPolicies(intents);
 
-  // Kiểm tra dữ liệu cần thiết thay vì chỉ kiểm tra
-  // xem có tìm thấy sản phẩm hoặc FAQ hay không.
   const hasKnowledge = hasRequiredKnowledge({
     intents,
     selectedProducts,
@@ -308,6 +336,7 @@ export function getStructuredKnowledge(message, analysis) {
     company: "Minh Phát",
     customerQuestion: message,
     customerIntents: intents,
+    customerProductMention: analysis.productMention || "",
     customerEntities: analysis.entities || {},
     products: selectedProducts,
     relevantKnowledge: selectedFaqs,
