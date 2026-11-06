@@ -235,10 +235,6 @@ export async function postChat(req, res, next) {
     // 7.2. ƯU TIÊN YÊU CẦU ĐẶT LỊCH TRỰC TIẾP
     // ==================================================
 
-    // Nếu khách chủ động yêu cầu gặp nhân viên hoặc đặt lịch,
-    // không cần gọi Gemini phân tích lại.
-    // Tránh việc AI hiểu nhầm yêu cầu thành tìm kiếm sản phẩm.
-
     if (hasExplicitBookingIntent(userMessage)) {
       return res.json(
         createResponse(
@@ -260,13 +256,18 @@ export async function postChat(req, res, next) {
       conversationHistory: [],
     });
 
-    // --------------------------------------------------
+    // ==================================================
     // 7.4. XỬ LÝ KHI GEMINI KHÔNG PHẢN HỒI
-    // --------------------------------------------------
+    // ==================================================
 
     if (!analysis) {
       return res.json(
-        createResponse(AI_UNAVAILABLE_ANSWER)
+        createResponse(
+          AI_UNAVAILABLE_ANSWER,
+          false,
+          [],
+          userMessage
+        )
       );
     }
 
@@ -290,9 +291,6 @@ export async function postChat(req, res, next) {
     // ==================================================
     // 8. KIỂM TRA PHẠM VI CÂU HỎI
     // ==================================================
-
-    // Câu hỏi ngoài phạm vi không hiển thị nút đặt lịch
-    // nếu khách không chủ động yêu cầu đặt lịch.
 
     if (scope === "out_of_scope") {
       return res.json(
@@ -333,9 +331,6 @@ export async function postChat(req, res, next) {
     // 10. XỬ LÝ CÂU HỎI CẦN LÀM RÕ
     // ==================================================
 
-    // Chỉ hỏi lại khi khách chưa cung cấp đủ thông tin.
-    // Không hỏi lại tên sản phẩm nếu productMention đã có.
-
     if (
       analysis.needsClarification &&
       analysis.clarificationQuestion &&
@@ -359,9 +354,6 @@ export async function postChat(req, res, next) {
       PRODUCT_SPECIFIC_INTENTS.some((intent) =>
         intents.includes(intent)
       );
-
-    // Nếu khách hỏi giá, tồn kho hoặc thông số
-    // nhưng chưa nói rõ sản phẩm thì mới hỏi lại.
 
     if (
       requiresSpecificProduct &&
@@ -391,10 +383,6 @@ export async function postChat(req, res, next) {
     // 13. KHÔNG CÓ DỮ LIỆU TRONG DATABASE
     // ==================================================
 
-    // Câu hỏi vẫn thuộc phạm vi Minh Phát
-    // nhưng không tìm thấy dữ liệu xác minh:
-    // Thông báo rõ và mời khách đặt lịch tư vấn.
-
     if (!structuredKnowledge.hasKnowledge) {
       return res.json(
         createResponse(
@@ -416,11 +404,31 @@ export async function postChat(req, res, next) {
     });
 
     // ==================================================
-    // 15. CÂU TRẢ LỜI DỰ PHÒNG
+    // 15. KIỂM TRA CÂU TRẢ LỜI CỦA AI
     // ==================================================
 
+    // Nếu AI không tạo được câu trả lời,
+    // sử dụng câu trả lời dự phòng từ database.
+    // Không tự động bật đặt lịch chỉ vì AI lỗi,
+    // bởi dữ liệu đã được xác minh ở bước trước.
+
     const finalAnswer =
-      aiAnswer || structuredKnowledge.answer;
+      typeof aiAnswer === "string" && aiAnswer.trim()
+        ? aiAnswer.trim()
+        : structuredKnowledge.answer;
+
+    // Nếu cả AI và câu trả lời dự phòng đều không có,
+    // chuyển khách sang tư vấn viên.
+    if (!finalAnswer) {
+      return res.json(
+        createResponse(
+          UNKNOWN_IN_SCOPE_ANSWER,
+          true,
+          intents,
+          userMessage
+        )
+      );
+    }
 
     // ==================================================
     // 16. TRẢ KẾT QUẢ

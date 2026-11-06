@@ -7,7 +7,10 @@ import {
 } from "../data/policies.js";
 import { faqKnowledge } from "../data/faqKnowledge.js";
 
-// FAQ tương ứng với từng ý định.
+// ======================================================
+// FAQ TƯƠNG ỨNG VỚI TỪNG Ý ĐỊNH
+// ======================================================
+
 const FAQ_BY_INTENT = {
   general: ["FAQ001"],
   product_search: ["FAQ002"],
@@ -25,6 +28,10 @@ const PRODUCT_FAQ_MAP = {
   "MP-CNC650": "FAQ005",
   "MP-KN15": "FAQ006",
 };
+
+// ======================================================
+// HÀM TIỆN ÍCH
+// ======================================================
 
 function uniqueItems(items) {
   return [...new Set(items)];
@@ -54,6 +61,155 @@ function hasData(value) {
   return Boolean(value);
 }
 
+function normalizeForMatching(value) {
+  return String(value || "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/[^\w\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// ======================================================
+// NHẬN DIỆN THÔNG SỐ KHÁCH HÀNG ĐANG HỎI
+// ======================================================
+
+const SPECIFICATION_ALIASES = [
+  {
+    key: "spindleSpeed",
+    terms: [
+      "toc do truc chinh",
+      "toc do spindle",
+      "spindle speed",
+    ],
+  },
+  {
+    key: "maxDrillingDiameter",
+    terms: [
+      "duong kinh khoan",
+      "khoan toi da",
+      "max drilling diameter",
+    ],
+  },
+  {
+    key: "maxTurningDiameter",
+    terms: [
+      "duong kinh tien",
+      "duong kinh gia cong toi da",
+      "max turning diameter",
+    ],
+  },
+  {
+    key: "workingPressure",
+    terms: [
+      "ap suat lam viec",
+      "ap suat",
+      "working pressure",
+    ],
+  },
+  {
+    key: "travelXYZ",
+    terms: [
+      "hanh trinh xyz",
+      "kich thuoc hanh trinh",
+      "hanh trinh",
+    ],
+  },
+  {
+    key: "operatingHours",
+    terms: [
+      "thoi gian van hanh",
+      "so gio van hanh",
+      "gio hoat dong",
+      "van hanh lien tuc",
+      "operating hours",
+    ],
+  },
+  {
+    key: "precision",
+    terms: [
+      "do chinh xac",
+      "dung sai",
+      "sai so",
+      "micromet",
+      "micron",
+      "precision",
+      "tolerance",
+    ],
+  },
+  {
+    key: "maxDrillingDiameter",
+    terms: [
+      "duong kinh khoan toi da",
+    ],
+  },
+  {
+    key: "airflow",
+    terms: [
+      "luu luong khi",
+      "luu luong",
+      "airflow",
+    ],
+  },
+  {
+    key: "power",
+    terms: [
+      "cong suat",
+      "power",
+    ],
+  },
+  {
+    key: "voltage",
+    terms: [
+      "dien ap",
+      "nguon dien",
+      "voltage",
+    ],
+  },
+  {
+    key: "speed",
+    terms: [
+      "toc do",
+      "vong quay",
+      "vong phut",
+      "speed",
+    ],
+  },
+  {
+    key: "weight",
+    terms: [
+      "trong luong",
+      "khoi luong",
+      "weight",
+    ],
+  },
+];
+
+function getRequestedSpecificationKeys(message) {
+  const normalizedMessage = normalizeForMatching(message);
+
+  const matchedKeys = SPECIFICATION_ALIASES
+    .filter(({ terms }) =>
+      terms.some((term) => {
+        const normalizedTerm = normalizeForMatching(term);
+        return normalizedMessage.includes(normalizedTerm);
+      })
+    )
+    .map(({ key }) => key);
+
+  // Nếu khách hỏi tốc độ trục chính,
+  // chỉ kiểm tra spindleSpeed, không kiểm tra speed.
+  if (matchedKeys.includes("spindleSpeed")) {
+    return uniqueItems(
+      matchedKeys.filter((key) => key !== "speed")
+    );
+  }
+
+  return uniqueItems(matchedKeys);
+}
+
 // ======================================================
 // LẤY SẢN PHẨM PHÙ HỢP
 // ======================================================
@@ -74,15 +230,12 @@ function getSelectedProducts(analysis) {
     productIds.includes(product.id)
   );
 
-  // Nếu khách đã nhắc đến sản phẩm cụ thể nhưng
-  // không tìm thấy sản phẩm tương ứng trong danh mục,
-  // tuyệt đối không trả về toàn bộ danh mục.
+  // Khách nhắc đến sản phẩm cụ thể nhưng không tìm thấy
+  // sản phẩm trong danh mục thì không lấy toàn bộ danh mục.
   if (productMention && matchedProducts.length === 0) {
     return [];
   }
 
-  // Nếu khách hỏi chung về danh mục sản phẩm
-  // hoặc cần tư vấn chọn máy, có thể dùng toàn bộ danh mục.
   const needsProductCatalog =
     intents.includes("product_search") ||
     intents.includes("consultation");
@@ -158,8 +311,12 @@ function hasIntentFaq(intent, selectedFaqs) {
 // KIỂM TRA DỮ LIỆU SẢN PHẨM
 // ======================================================
 
-function hasRequiredProductData(intent, selectedProducts) {
-  if (selectedProducts.length === 0) {
+function hasRequiredProductData(
+  intent,
+  selectedProducts,
+  message = ""
+) {
+  if (!selectedProducts.length) {
     return false;
   }
 
@@ -179,8 +336,28 @@ function hasRequiredProductData(intent, selectedProducts) {
           hasData(product.inventory.status)
         );
 
-      case "specifications":
-        return hasData(product.specifications);
+      case "specifications": {
+        const specifications = product.specifications;
+
+        if (!hasData(specifications)) {
+          return false;
+        }
+
+        const requestedKeys =
+          getRequestedSpecificationKeys(message);
+
+        // Nếu xác định được thông số khách đang hỏi,
+        // bắt buộc database phải có đúng thông số đó.
+        if (requestedKeys.length > 0) {
+          return requestedKeys.every((key) =>
+            hasData(specifications[key])
+          );
+        }
+
+        // Chưa nhận diện được thông số cụ thể.
+        // Chỉ xác nhận khi có dữ liệu thông số sản phẩm.
+        return true;
+      }
 
       default:
         return false;
@@ -193,6 +370,7 @@ function hasRequiredProductData(intent, selectedProducts) {
 // ======================================================
 
 function hasRequiredKnowledge({
+  message,
   intents,
   selectedProducts,
   selectedFaqs,
@@ -200,13 +378,23 @@ function hasRequiredKnowledge({
 }) {
   const checks = {
     price: () =>
-      hasRequiredProductData("price", selectedProducts),
+      hasRequiredProductData(
+        "price",
+        selectedProducts
+      ),
 
     inventory: () =>
-      hasRequiredProductData("inventory", selectedProducts),
+      hasRequiredProductData(
+        "inventory",
+        selectedProducts
+      ),
 
     specifications: () =>
-      hasRequiredProductData("specifications", selectedProducts),
+      hasRequiredProductData(
+        "specifications",
+        selectedProducts,
+        message
+      ),
 
     product_search: () =>
       selectedProducts.length > 0,
@@ -317,6 +505,7 @@ export function getStructuredKnowledge(message, analysis) {
   const selectedPolicies = getSelectedPolicies(intents);
 
   const hasKnowledge = hasRequiredKnowledge({
+    message,
     intents,
     selectedProducts,
     selectedFaqs,
